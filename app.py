@@ -61,18 +61,19 @@ if user_query:
         best_match_idx = similarity.argmax()
         context = corpus[best_match_idx]
 
-        # Improved prompt
-        prompt = f"""
-You are a helpful AI assistant specialized in SaaS accounting (e.g., ASC 606, revenue recognition, subscription billing).
-Use the provided context to give a concise and accurate answer to the user's question.
+prompt = f"""
+You are a certified public accountant (CPA) specializing in SaaS accounting under ASC 606.
+Given the following context from an internal FAQ, write a clear, complete, and professional answer
+to the user's question.
 
 Context:
 {context}
 
-Question:
+User Question:
 {user_query}
 
 Answer:"""
+
 
         # Generate answer
         inputs = tokenizer(prompt.strip(), return_tensors="pt").to("cpu")
