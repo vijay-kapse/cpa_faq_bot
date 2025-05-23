@@ -30,6 +30,25 @@ df, corpus, vectorizer, X = load_and_prepare_data()
 st.title("📘 SaaS Accounting FAQ Bot (Flan-T5)")
 st.write("Ask a question about SaaS accounting (ASC 606, revenue recognition, contracts, etc.)")
 
+
+st.subheader("💡 Suggested Questions")
+col1, col2 = st.columns(2)
+
+with col1:
+    if st.button("💬 How do I record revenue from annual subscriptions collected upfront?"):
+        st.session_state.user_query = "How do I record revenue from annual subscriptions collected upfront?"
+
+with col2:
+    if st.button("💬 Should I recognize deferred revenue for prepaid SaaS contracts?"):
+        st.session_state.user_query = "Should I recognize deferred revenue for prepaid SaaS contracts?"
+
+# Initialize session state if not already set
+if "user_query" not in st.session_state:
+    st.session_state.user_query = ""
+
+user_query = st.text_input("Your question:", value=st.session_state.user_query)
+
+
 user_query = st.text_input("Your question:")
 
 if user_query:
