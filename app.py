@@ -61,3 +61,9 @@ Answer:"""
 
         response = tokenizer.decode(outputs[0], skip_special_tokens=True)
         st.markdown("**Bot:** " + response.strip())
+
+
+
+
+st.markdown("<hr style='margin-top: 2rem;'>", unsafe_allow_html=True)
+st.markdown("<center>Made with ❤️ by Shota and Vijay</center>", unsafe_allow_html=True)
