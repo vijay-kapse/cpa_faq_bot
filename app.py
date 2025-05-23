@@ -49,7 +49,7 @@ if "user_query" not in st.session_state:
 user_query = st.text_input("Your question:", value=st.session_state.user_query)
 
 
-user_query = st.text_input("Your question:")
+# user_query = st.text_input("Your question:")
 
 if user_query:
     if len(user_query.strip()) < 5:
