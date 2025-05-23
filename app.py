@@ -61,18 +61,18 @@ if user_query:
         best_match_idx = similarity.argmax()
         context = corpus[best_match_idx]
 
-prompt = f"""
-You are a certified public accountant (CPA) specializing in SaaS accounting under ASC 606.
-Given the following context from an internal FAQ, write a clear, complete, and professional answer
-to the user's question.
-
-Context:
-{context}
-
-User Question:
-{user_query}
-
-Answer:"""
+        prompt = f"""
+        You are a certified public accountant (CPA) specializing in SaaS accounting under ASC 606.
+        Given the following context from an internal FAQ, write a clear, complete, and professional answer
+        to the user's question.
+        
+        Context:
+        {context}
+        
+        User Question:
+        {user_query}
+        
+        Answer:"""
 
 
         # Generate answer
