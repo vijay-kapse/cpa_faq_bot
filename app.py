@@ -22,27 +22,42 @@ def load_and_prepare_data():
     X = vectorizer.fit_transform(corpus)
     return df, corpus, vectorizer, X
 
-# Load everything
+# Load resources
 tokenizer, model = load_model_and_tokenizer()
 df, corpus, vectorizer, X = load_and_prepare_data()
 
 # Streamlit UI
 st.title("📘 SaaS Accounting FAQ Bot (Flan-T5)")
-st.write("Ask me anything related to SaaS accounting!")
+st.write("Ask a question about SaaS accounting (ASC 606, revenue recognition, contracts, etc.)")
 
 user_query = st.text_input("Your question:")
 
 if user_query:
-    # Find the most relevant context
-    query_vec = vectorizer.transform([user_query])
-    similarity = cosine_similarity(query_vec, X).flatten()
-    best_match_idx = similarity.argmax()
-    context = corpus[best_match_idx]
+    if len(user_query.strip()) < 5:
+        st.warning("Please enter a more specific question.")
+    else:
+        # Find the most relevant context
+        query_vec = vectorizer.transform([user_query])
+        similarity = cosine_similarity(query_vec, X).flatten()
+        best_match_idx = similarity.argmax()
+        context = corpus[best_match_idx]
 
-    # Format prompt
-    prompt = f"Context: {context}\n\nQuestion: {user_query}\n\nAnswer:"
-    inputs = tokenizer(prompt, return_tensors="pt").to("cpu")
-    outputs = model.generate(**inputs, max_new_tokens=150)
+        # Improved prompt
+        prompt = f"""
+You are a helpful AI assistant specialized in SaaS accounting (e.g., ASC 606, revenue recognition, subscription billing).
+Use the provided context to give a concise and accurate answer to the user's question.
 
-    response = tokenizer.decode(outputs[0], skip_special_tokens=True)
-    st.markdown("**Bot:** " + response.strip())
+Context:
+{context}
+
+Question:
+{user_query}
+
+Answer:"""
+
+        # Generate answer
+        inputs = tokenizer(prompt.strip(), return_tensors="pt").to("cpu")
+        outputs = model.generate(**inputs, max_new_tokens=150)
+
+        response = tokenizer.decode(outputs[0], skip_special_tokens=True)
+        st.markdown("**Bot:** " + response.strip())
