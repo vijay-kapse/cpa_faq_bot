@@ -14,7 +14,7 @@ def load_model_and_tokenizer():
 
 @st.cache_data(show_spinner=False)
 def load_and_prepare_data():
-    df = pd.read_csv("Training Dataset - FAQ (1).csv")
+    df = pd.read_csv("faq.csv")
     questions = df['Question Text'].fillna("").tolist()
     answers = df['Answer Text'].fillna("").tolist()
     corpus = [q + " " + a for q, a in zip(questions, answers)]
