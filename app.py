@@ -27,7 +27,7 @@ tokenizer, model = load_model_and_tokenizer()
 df, corpus, vectorizer, X = load_and_prepare_data()
 
 # Streamlit UI
-st.title("📘 SaaS Accounting FAQ Bot (Flan-T5)")
+st.title("Accounting FAQ Bot")
 st.write("Ask a question about SaaS accounting (ASC 606, revenue recognition, contracts, etc.)")
 
 
